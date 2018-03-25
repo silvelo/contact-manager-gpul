@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Node (Typescript)",
+            "protocol": "inspector",
+            "program": "${workspaceRoot}/src/server.ts",
+            "cwd": "${workspaceRoot}",
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "preLaunchTask": "build",
+            "console": "externalTerminal",
+            "outFiles": [
+                "${workspaceRoot}/dist/**/*.js"
+            ],
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Port",
+            "address": "localhost",
+            "port": 5858,
+            "outFiles": []
+        }
+    ]
+}
