@@ -1,6 +1,5 @@
 import { Component } from "@nestjs/common";
 import { IUser } from "./users.model";
-import { RemoveException } from "../common/exceptions/remove.exception";
 
 @Component()
 export class UsersService {
@@ -22,9 +21,9 @@ export class UsersService {
 
     removeById(userId: number) {
         let index = this.users.findIndex(user => user.id == userId);
-        if (index === -1) throw new RemoveException(userId)
+        if (index !== -1) this.users.splice(index, 1);
 
-        this.users.splice(index, 1);
+        return index === -1;
     }
 
 

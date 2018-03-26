@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
 
-export class RemoveException extends HttpException {
-    constructor(id: number) {
-        super(`The user ${id} dont exists`, HttpStatus.NOT_FOUND);
+export class RemoveUserException extends HttpException {
+    constructor(id: string) {
+        super(`The user ${id} doesn't exist`, HttpStatus.NOT_FOUND);
     }
 }
