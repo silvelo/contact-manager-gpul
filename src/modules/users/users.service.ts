@@ -1,5 +1,6 @@
 import { Component } from "@nestjs/common";
 import { IUser } from "./users.model";
+import { CreateUserDto } from "./dto/create-user.dto";
 
 @Component()
 export class UsersService {
@@ -14,7 +15,7 @@ export class UsersService {
         return this.users.find(user => user.id === userId);
     }
 
-    createUser(newUser: IUser) {
+    createUser(newUser: CreateUserDto) {
         this.positionId++;
         this.users.push({ ...newUser, id: this.positionId });
     }
