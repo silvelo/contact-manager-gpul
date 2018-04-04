@@ -14,21 +14,21 @@ export class UsersController {
 
     @ApiResponse({ status: 201, description: 'The record has been successfully created.', type: User })
     @Post()
-    createUser(@Body(new ValidationPipe()) newUser: CreateUserDto) {
-        return this.usersService.createUser(newUser);
+    async createUser(@Body(new ValidationPipe()) newUser: CreateUserDto): Promise<IUser> {
+        return await this.usersService.createUser(newUser);
     }
 
     @ApiResponse({ status: 200, type: User, isArray: true })
     @Get()
-    retrieveAll(): IUser[] {
-        return this.usersService.retreiveAll()
+    async retrieveAll(): Promise<IUser[]> {
+        return await this.usersService.retreiveAll()
     }
 
     @ApiResponse({ status: 200 })
     @ApiResponse({ status: 404, description: 'Not Found', type: User })
     @Get(':id')
-    retreiveById(@Param('id') id: string): IUser {
-        let user = this.usersService.retrieveById(+id);
+    async retreiveById(@Param('id') id: string): Promise<IUser> {
+        let user = await this.usersService.retrieveById(id);
         if (!user) throw new NotFoundException(`The user ${id} doesn't exist`);
         return user;
     }
@@ -36,9 +36,9 @@ export class UsersController {
     @ApiResponse({ status: 204, description: 'The record has been successfully deleted.' })
     @ApiResponse({ status: 404, description: 'Not Found' })
     @Delete(':id')
-    removeById(@Param('id') id: string) {
-        let removeStatus = this.usersService.removeById(+id);
-        if (removeStatus) throw new RemoveUserException(id);
+    async removeById(@Param('id') id: string) {
+        await this.usersService.removeById(id);
+
     }
 
 }

@@ -1,9 +1,10 @@
 import { IsString } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { Document } from 'mongoose';
 
 export class User {
     @ApiModelProperty()
-    readonly id: number;
+    readonly _id: string;
 
     @ApiModelProperty()
     readonly name: string;
@@ -12,8 +13,7 @@ export class User {
     readonly number: string;
 }
 
-export interface IUser {
-    id: number,
+export interface IUser extends Document {
     name: string,
     number: string
 }

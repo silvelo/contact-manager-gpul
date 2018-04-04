@@ -1,30 +1,28 @@
 import { Component } from "@nestjs/common";
 import { IUser } from "./users.model";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { Model } from 'mongoose';
+import { UserSchema } from "./schema/user.schema";
+import { InjectModel } from "@nestjs/mongoose";
 
 @Component()
 export class UsersService {
-    private users: IUser[] = [{ id: 1, name: 'Arturo', number: '555-5555' }, { id: 2, name: 'Pepe', number: '5555-6666' }];
-    private positionId: number = 2;
+    constructor(@InjectModel(UserSchema) private readonly userModel: Model<IUser>) { }
 
-    retreiveAll(): IUser[] {
-        return this.users;
+    async retreiveAll(): Promise<IUser[]> {
+        return await this.userModel.find();
     }
 
-    retrieveById(userId: number) {
-        return this.users.find(user => user.id === userId);
+    async retrieveById(userId: string): Promise<IUser> {
+        return await this.userModel.findById(userId);
     }
 
-    createUser(newUser: CreateUserDto) {
-        this.positionId++;
-        this.users.push({ ...newUser, id: this.positionId });
+    async createUser(newUser: CreateUserDto) {
+        return await this.userModel.create(newUser);
     }
 
-    removeById(userId: number) {
-        let index = this.users.findIndex(user => user.id == userId);
-        if (index !== -1) this.users.splice(index, 1);
-
-        return index === -1;
+    async removeById(userId: string) {
+        await this.userModel.findByIdAndRemove(userId);
     }
 
 
